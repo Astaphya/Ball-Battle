@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
     private float outOfBounds = -10f;
 
     public float speed = 5f;
-    public VariableJoystick variableJoystick;
+    [SerializeField] VariableJoystick variableJoystick;
     [SerializeField] GameObject pcGuide;
 
   
@@ -27,17 +27,23 @@ public class PlayerController : MonoBehaviour
     
     void Update()
     {
-        float vertical = Input.GetAxis("Vertical");
-        myRigid.AddForce(focalPoint.transform.forward * speed  * vertical ); // FocalPoint'in baktığı yönün playerın yönü haline getiriyoruz.
+       
+            float vertical = Input.GetAxis("Vertical");
+            myRigid.AddForce(focalPoint.transform.forward * speed  * vertical ); // FocalPoint'in baktığı yönün playerın yönü haline getiriyoruz.
+     
+        
 
+        
+        
         #if UNITY_ANDROID
 
             variableJoystick.gameObject.SetActive(true);
-             Vector3 direction = focalPoint.transform.forward * variableJoystick.Vertical ;
+            Vector3 direction = focalPoint.transform.forward * variableJoystick.Vertical ;
             myRigid.AddForce(direction * speed * Time.fixedDeltaTime , ForceMode.VelocityChange);
             pcGuide.gameObject.SetActive(false);
             
         #endif
+        
 
         powerupIndicator.transform.position = transform.position + new Vector3(0,-0.5f,0); // Powerup Indicator'u offset vererek player'ı takip etmesini sağlıyoruz.
 
